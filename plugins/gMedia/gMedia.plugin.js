@@ -39,16 +39,18 @@ gMedia.prototype.getDescription = function() {
 };
 
 gMedia.prototype.getVersion = function() {
-    return "1.0.1";
+    return "1.0.2";
 };
 
 gMedia.prototype.getAuthor = function() {
     return "gn0mesort";
 };
 
+gMedia.prototype.count = 0; //Store a count of recognized media elements for constructing IDs
+
 gMedia.prototype.convert = function() {
-    var count = 0; //Count of the number of multimedia files recognized
-    $(".message a").each(function(){ //For each <a> element with a parent of the class "message"
+    var count = this.count; //Count of the number of multimedia files recognized
+    $(".attachment-inner a").each(function(){ //For each <a> element with a parent of the class "message"
         var target = $(this); //This element
         var href = target.attr("href").replace("http:", "https:"); //Discord only likes HTTPS
         var scroller = $(".scroller.messages")[0]; //The message scroller window
@@ -68,12 +70,14 @@ gMedia.prototype.convert = function() {
                 target.replaceWith("<audio id='audio" + count + "' src='" + encodeURI(href) + "' type='audio/" + type + "' controls=''></audio>"); //Replace <a> element with <audio> element
                 $("#audio" + count++).parent().find(".metadata")[0].innerText += " - " + fileName + " - " + type; //Fill audio metadata
             }
-            else{ scroll &= false; } //If not audio or video definitely don't scroll
+            else { scroll &= false; } //If not audio or video definitely don't scroll
         }
-        else{ scroll &= false; } //If not defined don't scroll
+        else { scroll &= false; } //If not defined don't scroll
         if(scroll) { //If the message window needs to be scrolled 
             scroller.scrollTop = scroller.scrollHeight; //Scroll to bottom
             console.log("Scrolling to most recent!"); //Log scrolling
          }
     });
+    if(count < 10000) { this.count = count; } //Catch ridiculous counts
+    else { this.count = 0; } //If the count was ridiculous reset it.
 }
