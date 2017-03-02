@@ -1,2 +1,2 @@
 @echo off
-del %appdata%\BetterDiscord\plugins\gMedia.plugin.js
+del %appdata%\BetterDiscord\plugins\GMedia.plugin.js

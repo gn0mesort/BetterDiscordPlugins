@@ -1,2 +1,2 @@
 @echo off
-del %appdata%\BetterDiscord\plugins\gGreentext.plugin.js
+del %appdata%\BetterDiscord\plugins\GGreentext.plugin.js

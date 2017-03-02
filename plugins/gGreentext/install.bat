@@ -1,2 +1,2 @@
 @echo off
-copy /B gGreentext.plugin.js %appdata%\BetterDiscord\plugins\gGreentext.plugin.js
+copy /B GGreentext.plugin.js %appdata%\BetterDiscord\plugins\GGreentext.plugin.js

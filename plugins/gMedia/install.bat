@@ -1,2 +1,2 @@
 @echo off
-copy /B gMedia.plugin.js %appdata%\BetterDiscord\plugins\gMedia.plugin.js
+copy /B GMedia.plugin.js %appdata%\BetterDiscord\plugins\GMedia.plugin.js
