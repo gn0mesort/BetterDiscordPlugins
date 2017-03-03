@@ -29,10 +29,10 @@ GBossKey.prototype = {
         $(document).on('keyup.gBossKey.reading', function (event) {
             let plugin = BdApi.getPlugin('GBossKey');
             plugin.key = event.which;
-            plugin.start();
             element.innerText = event.which;
-            $(document).off('keyup.GBossKey.reading');
+            $(document).off('keyup.gBossKey.reading');
             bdPluginStorage.set('GBossKey', 'key', event.which);
+            plugin.start();
         });
         element.innerText = 'Waiting for input...';
     },
