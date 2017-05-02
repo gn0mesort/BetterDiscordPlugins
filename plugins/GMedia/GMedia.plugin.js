@@ -16,7 +16,7 @@ GMedia.prototype = {
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
   getDescription: function () { return 'Adds HTML5 media support to Discord.<br /> Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.1.0' },
+  getVersion: function () { return '1.1.1' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
@@ -25,7 +25,7 @@ GMedia.prototype = {
       let target = $(targets[i]) // Select the target
       let scroll = scroller.scrollHeight - scroller.scrollTop === scroller.clientHeight // Calculate scroll value
       if (!target.attr('handled.gnomesort.media') && target.attr('href')) { // If there's an href and not handled
-        let href = target.attr('href') // Get the href
+        let href = target.attr('href').replace(/^(http)/g, 'https') // Get the href
         let type = href.split('.')[href.split('.').length - 1] // Get the file type
         let fileName = href.split('/')[href.split('/').length - 1] // Get the file name
         if (type === 'mp4' || type === 'webm') { // If video
