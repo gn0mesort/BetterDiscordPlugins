@@ -16,7 +16,7 @@ GMedia.prototype = {
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
   getDescription: function () { return 'Adds HTML5 media support to Discord.<br /> Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.1.3' },
+  getVersion: function () { return '1.2.0' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
@@ -28,7 +28,8 @@ GMedia.prototype = {
         let href = target.attr('href').replace(/^(https?)/g, 'https') // Get the href
         let type = href.split('.')[href.split('.').length - 1].replace(/mp3/g, 'mpeg') // Get the file type
         let fileName = href.split('/')[href.split('/').length - 1] // Get the file name
-        let metaDataElement = $(`<div class="metadata" style="font-size: 11px; color: gray"><a href="${href}" style="font-size: 11px" handled.gnomesort.media="true">${href}</a><br />${fileName} - ${type}</div>`)
+        let loopControl = 'Loop: <input type="checkbox" name="loop" style="vertical-align: middle" onchange="$(this).parent().parent().find(\'video, audio\').attr(\'loop\', this.checked)" />'
+        let metaDataElement = $(`<div class="metadata" style="font-size: 11px; color: gray"><a href="${href}" style="font-size: 11px; display: inline" handled.gnomesort.media="true">${fileName}</a> - ${type} - ${loopControl}</div>`)
         let metaData = null
         let data = null
         if (type === 'mp4' || type === 'webm') { // If video
