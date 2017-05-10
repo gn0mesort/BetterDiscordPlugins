@@ -10,18 +10,18 @@ GMedia.prototype = {
   load: function () { },
   unload: function () { },
   stop: function () { },
-  onMessage: function () { setTimeout(this.convert(), 2000) },
+  onMessage: function () { setTimeout(this.convert(), 3000) },
   onSwitch: function () { this.convert() },
   observer: function (e) { },
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
   getDescription: function () { return 'Adds HTML5 media support to Discord.<br /> Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.1.1' },
+  getVersion: function () { return '1.1.2' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
     let scroller = $('.scroller.messages')[0] // Select scroller
-    for (let i = 0; i < targets.length; ++i) { // For each targer
+    for (let i = targets.length - 1; i >= 0; --i) { // For each targer
       let target = $(targets[i]) // Select the target
       let scroll = scroller.scrollHeight - scroller.scrollTop === scroller.clientHeight // Calculate scroll value
       if (!target.attr('handled.gnomesort.media') && target.attr('href')) { // If there's an href and not handled
