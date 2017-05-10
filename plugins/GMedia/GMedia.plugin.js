@@ -16,7 +16,7 @@ GMedia.prototype = {
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
   getDescription: function () { return 'Adds HTML5 media support to Discord.<br /> Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.2.0' },
+  getVersion: function () { return '1.2.1' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
@@ -29,7 +29,7 @@ GMedia.prototype = {
         let type = href.split('.')[href.split('.').length - 1].replace(/mp3/g, 'mpeg') // Get the file type
         let fileName = href.split('/')[href.split('/').length - 1] // Get the file name
         let loopControl = 'Loop: <input type="checkbox" name="loop" style="vertical-align: middle" onchange="$(this).parent().parent().find(\'video, audio\').attr(\'loop\', this.checked)" />'
-        let metaDataElement = $(`<div class="metadata" style="font-size: 11px; color: gray"><a href="${href}" style="font-size: 11px; display: inline" handled.gnomesort.media="true">${fileName}</a> - ${type} - ${loopControl}</div>`)
+        let metaDataElement = $(`<div class="metadata gnomesort-metadata" style="font-size: 11px; color: gray"><a href="${href}" style="font-size: 11px; display: inline" handled.gnomesort.media="true">${fileName}</a> - ${type} - ${loopControl}</div>`)
         let metaData = null
         let data = null
         if (type === 'mp4' || type === 'webm') { // If video
@@ -40,7 +40,7 @@ GMedia.prototype = {
         if (data) {
           console.log(`Media Found! type is ${type} & href is ${href}`) // Log
           target.replaceWith(data) // Replace the link with the video
-          metaData = data.parent().find('.metadata') // Find the metadata element
+          metaData = data.parent().find('.metadata:not(.gnomesort-metadata)') // Find the metadata element
           if (metaData.length > 0) { // If the metadata exists
             metaData.replaceWith(metaDataElement)
           } else { // Otherwise
