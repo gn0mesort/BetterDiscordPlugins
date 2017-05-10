@@ -25,7 +25,7 @@ GGreentext.prototype = {
     for (let i = targets.length - 1; i >= 0; --i) { // For each target
       let target = $(targets[i]) // Select the current target
       if (!target.attr('handled.gnomesort.greentext')) { // If not handled and not a code block
-        target.html(target.html().replace(/(^|>)(\s*&gt;[^<\n]+)/gm, '$1<span class="greentext">$2</span>'))
+        target.html(target.html().replace(/(^|>)(\s*&gt;[^<\n]+)/gm, '$1<span class="greentext">$2</span>')) // Markup text according to regex
         target.attr('handled.gnomesort.greentext', true) // Set handled
       }
     }
