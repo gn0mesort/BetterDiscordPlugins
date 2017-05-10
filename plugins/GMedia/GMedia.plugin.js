@@ -16,49 +16,44 @@ GMedia.prototype = {
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
   getDescription: function () { return 'Adds HTML5 media support to Discord.<br /> Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.1.2' },
+  getVersion: function () { return '1.1.3' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
     let scroller = $('.scroller.messages')[0] // Select scroller
+    let scroll = scroller.scrollHeight - scroller.scrollTop === scroller.clientHeight // Calculate scroll value
     for (let i = targets.length - 1; i >= 0; --i) { // For each targer
       let target = $(targets[i]) // Select the target
-      let scroll = scroller.scrollHeight - scroller.scrollTop === scroller.clientHeight // Calculate scroll value
       if (!target.attr('handled.gnomesort.media') && target.attr('href')) { // If there's an href and not handled
         let href = target.attr('href').replace(/^(https?)/g, 'https') // Get the href
-        let type = href.split('.')[href.split('.').length - 1] // Get the file type
+        let type = href.split('.')[href.split('.').length - 1].replace(/mp3/g, 'mpeg') // Get the file type
         let fileName = href.split('/')[href.split('/').length - 1] // Get the file name
+        let metaDataElement = $(`<div class="metadata" style="font-size: 11px; color: gray"><a href="${href}" style="font-size: 11px" handled.gnomesort.media="true">${href}</a><br />${fileName} - ${type}</div>`)
+        let metaData = null
+        let data = null
         if (type === 'mp4' || type === 'webm') { // If video
-          let video = $(`<video style="height: 320px; width: 30vw;" src="${encodeURI(href)}" type="video/${type}" controls=""></video>`) // Create video element
-          let metaData = null // Declare metadata
+          data = $(`<video style="height: 320px; width: 30vw;" src="${encodeURI(href)}" type="video/${type}" controls=""></video>`) // Create video element
+        } else if (type === 'mpeg' || type === 'ogg' || type === 'wav') {
+          data = $(`<audio src="${encodeURI(href)}" type="audio/${type}" controls=""></audio>`) // Create audio element
+        } else { scroll = false }
+        if (data) {
           console.log(`Media Found! type is ${type} & href is ${href}`) // Log
-          target.replaceWith(video) // Replace the link with the video
-          metaData = video.parent().find('.metadata') // Find the metadata element
+          target.replaceWith(data) // Replace the link with the video
+          metaData = data.parent().find('.metadata') // Find the metadata element
           if (metaData.length > 0) { // If the metadata exists
-            metaData[0].innerText += ` - ${fileName} - ${type}` // Fill video metadata
+            metaData.replaceWith(metaDataElement)
           } else { // Otherwise
-            video.parent().append(`<div class="metadata"><a href="${href}">${href}</a></div>`) // Create metadata
+            data.parent().append(metaDataElement) // Create metadata
           }
-          video.parent().attr('handled.gnomesort.media', true) // Set handled
-        } else if (type === 'mp3' || type === 'ogg' || type === 'wav') { // If audio
-          if (type === 'mp3') { type = 'mpeg' } // Convert mp3 to mpeg type
-          let audio = $(`<audio src="${encodeURI(href)}" type="audio/${type}" controls=""></audio>`) // Create audio element
-          let metaData = null // Declare metadata
-          console.log(`Media Found! type is ${type} & href is ${href}`) // Log
-          target.replaceWith(audio) // Replace link with audio
-          metaData = audio.parent().find('.metadata') // Find the metadata element
-          if (metaData.length > 0) { // If metadata exists
-            metaData[0].innerText += ` - ${fileName} - ${type}` // Fill video metadata
-          } else { // Otherwise
-            audio.parent().append(`<div class="metadata"><a href="${href}">${href}</a></div>`) // Create metadata
-          }
-          audio.parent().attr('handled.gnomesort.media', true) // Set handled
-        } else { scroll = false } // If no file is found don't scroll
-      } else { scroll = false } // If skipping target don't scroll
-      if (scroll) { // If the message window needs to be scrolled
-        scroller.scrollTop = scroller.scrollHeight // Scroll to bottom
-        console.log('Scrolling to most recent!') // Log scrolling
-      }
+          data.parent().attr('handled.gnomesort.media', true) // Set handled
+        }
+      } else { scroll = false } // If no file is found don't scroll
+    }
+    if (scroll) { // If the message window needs to be scrolled
+      scroller.scrollTop = scroller.scrollHeight // Scroll to bottom
+      console.log('Scrolling to most recent!') // Log scrolling
     }
   }
 }
+
+
