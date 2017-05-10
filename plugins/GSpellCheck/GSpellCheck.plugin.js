@@ -56,7 +56,7 @@ GSpellCheck.prototype = {
       for (let suggestion of suggestions) { // Add each option to the context menu
         spellerMenu.append(new MenuItem({ label: suggestion, click: spellerMenu.clickEvent }))
       }
-      spellerMenu.popup() // Display context menu
+      spellerMenu.popup(remote.getCurrentWindow(), { async: true }) // Display context menu
     }
   }
 }
