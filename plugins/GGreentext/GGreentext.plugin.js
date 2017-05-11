@@ -17,7 +17,7 @@ GGreentext.prototype = {
   oberserver: function (e) { },
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GGreentext' },
-  getDescription: function () { return 'Convert >quotes to greentext.<br /> Styling for greentext must be done in external CSS.' },
+  getDescription: function () { return 'Convert >quotes to greentext. Wraps quotes in <span class="greentext"></span>. Style .greentext in custom CSS to get any color you like. The default color is #789922' },
   getVersion: function () { return '1.1.1' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
@@ -25,7 +25,7 @@ GGreentext.prototype = {
     for (let i = targets.length - 1; i >= 0; --i) { // For each target
       let target = $(targets[i]) // Select the current target
       if (!target.attr('handled.gnomesort.greentext')) { // If not handled and not a code block
-        target.html(target.html().replace(/(^|>)(\s*&gt;[^<\n]+)/gm, '$1<span class="greentext">$2</span>')) // Markup text according to regex
+        target.html(target.html().replace(/(^|>)(\s*&gt;[^<\n]+)/gm, '$1<span class="greentext" style="color: #789922">$2</span>')) // Markup text according to regex
         target.attr('handled.gnomesort.greentext', true) // Set handled
       }
     }
