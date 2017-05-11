@@ -13,7 +13,7 @@ GBossKey.prototype = {
   load: function () { },
   getName: function () { return 'GBossKey' },
   getDescription: function () { return 'Press a key to minimize Discord. Any key may be bound using this plugin\'s settings panel.' },
-  getVersion: function () { return '1.0.2' },
+  getVersion: function () { return '1.0.3' },
   getAuthor: function () { return 'gn0mesort' },
   getSettingsPanel: function () {
     return `<div>Boss Key: <button style="width: 30vw;" onclick="GBossKey.prototype.readKey(this);">${this.key}</button></div>`
@@ -21,6 +21,7 @@ GBossKey.prototype = {
   key: 19,
   hideWindow: function (event) {
     if (event.which === event.data.key) {
+      const { remote } = require('electron') // Load remote from Electron
       remote.BrowserWindow.getFocusedWindow().minimize()
       console.log('Minimized Window')
     }
@@ -38,5 +39,3 @@ GBossKey.prototype = {
     element.innerText = 'Waiting for input...'
   }
 }
-
-const { remote } = require('electron')

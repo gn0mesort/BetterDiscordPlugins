@@ -9,11 +9,12 @@ var GSpellCheck = function () { }
 GSpellCheck.prototype = {
   getName: function () { return 'GSpellCheck' },
   getDescription: function () { return 'Add spellchecking with Typo.js' },
-  getVersion: function () { return '1.0.2' },
+  getVersion: function () { return '1.0.3' },
   getAuthor: function () { return 'gn0mesort' },
   load: function () { },
   unload: function () { },
   start: function () {
+    const { webFrame } = require('electron') // Load webFrame from Electron
     // Load Typo object using LibreOffice dictionary
     this.spellChecker.typo = new Typo('en_US', false, false, {
       dictionaryPath: 'https://raw.githubusercontent.com/LibreOffice/dictionaries/master/en'
@@ -25,6 +26,7 @@ GSpellCheck.prototype = {
     $('textarea').on('contextmenu.gnomesort', { spellChecker: this.spellChecker }, this.contextMenu) // Enable context menu
   },
   stop: function () {
+    const { webFrame } = require('electron') // Load webFrame from Electron
     $('textarea').off('contextmenu.gnomesort') // Disable context menu
     webFrame.setSpellCheckProvider('', false, this.spellCheckerDisable) // Disable provider
   },
@@ -44,6 +46,9 @@ GSpellCheck.prototype = {
     spellCheck: function (text) { return true }
   },
   contextMenu: function (event) { // set context menu event
+    const { remote } = require('electron') // Load remote from Electron
+    const Menu = remote.Menu // Menus from remote
+    const MenuItem = remote.MenuItem // MenuItems from remote
     let selection = window.getSelection().toString() // get selected text
     let suggestions = event.data.spellChecker.typo.suggest(selection, 10) // get suggestions
     if (suggestions.length > 0) { // If suggestions are found
@@ -60,12 +65,6 @@ GSpellCheck.prototype = {
     }
   }
 }
-
-// Electron Modules
-const { remote } = require('electron')
-const Menu = remote.Menu
-const MenuItem = remote.MenuItem
-const { webFrame } = require('electron')
 
 // Load Typo.js
 let typoScript = document.createElement('script')
