@@ -5,6 +5,17 @@
 var GBossKey = function () { }
 GBossKey.prototype = {
   start: function () {
+    if (!this.keyCodes) {
+      let plugin = this
+      $.ajax({
+        url: 'https://raw.githubusercontent.com/gn0mesort/BetterDiscordPlugins/master/plugins/GBossKey/keys.json',
+        async: false
+      }).done(function (data) {
+        console.log(this)
+        console.log(data.responseText)
+        this.keyCodes = JSON.parse(data.responseText)
+      })
+    }
     let configKey = bdPluginStorage.get('GBossKey', 'key')
     if (configKey) { this.key = configKey }
     $(document).on('keyup.gnomesort', { key: this.key }, this.hideWindow)
@@ -19,6 +30,7 @@ GBossKey.prototype = {
     return `<div>Boss Key: <button style="width: 30vw;" onclick="GBossKey.prototype.readKey(this);">${this.keyCodes[this.key]}</button></div>`
   },
   key: 19,
+  keyCodes: null,
   hideWindow: function (event) {
     if (event.which === event.data.key) {
       const { remote } = require('electron') // Load remote from Electron
