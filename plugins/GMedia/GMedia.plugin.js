@@ -15,13 +15,13 @@ GMedia.prototype = {
   observer: function (e) { },
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
-  getDescription: function () { return 'Adds HTML5 media support to Discord. Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.2.2' },
+  getDescription: function () { return 'Adds support for HTML5 media files. Now includes looping audio/video. Based on mediaSupport.plugin.js' },
+  getVersion: function () { return '1.2.3' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
     let scroller = $('.scroller.messages')[0] // Select scroller
-    let scroll = scroller.scrollHeight - scroller.scrollTop === scroller.clientHeight // Whether or not the scroller is at the bottom of the page
+    let scroll = scroller ? scroller.scrollHeight - scroller.scrollTop === scroller.clientHeight : false // Whether or not the scroller is at the bottom of the page
     let dataFound = false // Whether or not data was found
     for (let i = targets.length - 1; i >= 0; --i) { // For each target
       let target = $(targets[i]) // Select the target
