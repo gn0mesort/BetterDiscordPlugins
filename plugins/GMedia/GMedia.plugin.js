@@ -15,7 +15,7 @@ GMedia.prototype = {
   observer: function (e) { },
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
-  getDescription: function () { return 'Adds HTML5 media support to Discord.<br /> Based on mediaSupport.plugin.js' },
+  getDescription: function () { return 'Adds HTML5 media support to Discord. Based on mediaSupport.plugin.js' },
   getVersion: function () { return '1.2.2' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
