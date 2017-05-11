@@ -16,7 +16,7 @@ GBossKey.prototype = {
   getVersion: function () { return '1.0.3' },
   getAuthor: function () { return 'gn0mesort' },
   getSettingsPanel: function () {
-    return `<div>Boss Key: <button style="width: 30vw;" onclick="GBossKey.prototype.readKey(this);">${this.key}</button></div>`
+    return `<div>Boss Key: <button style="width: 30vw;" onclick="GBossKey.prototype.readKey(this);">${this.keyCodes[this.key]}</button></div>`
   },
   key: 19,
   hideWindow: function (event) {
@@ -31,7 +31,7 @@ GBossKey.prototype = {
     $(document).on('keyup.reading.gnomesort', function (event) {
       let plugin = BdApi.getPlugin('GBossKey')
       plugin.key = event.which
-      element.innerText = event.which
+      element.innerText = plugin.keyCodes[event.which]
       $(document).off('keyup.reading.gnomesort')
       bdPluginStorage.set('GBossKey', 'key', event.which)
       plugin.start()
