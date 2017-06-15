@@ -1,7 +1,7 @@
 //META{"name":"GMedia"}*//
 /*
     Defines a plugin for BetterDiscord that allows for the playback of multimedia content using HTML5 audio and video.
-    Builds on the premise of mediaSupport.plugin.js
+    Builds on the premise of mediaSupport.plugin.js. This plugin also formats metadata and provides looping controls.
 */
 
 var GMedia = function () { }
@@ -12,11 +12,11 @@ GMedia.prototype = {
   stop: function () { },
   onMessage: function () { setTimeout(this.convert(), 3000) },
   onSwitch: function () { this.convert() },
-  observer: function (e) { },
+  observer: function (e) { setTimeout(this.convert(), 3000) },
   getSettingsPanel: function () { return '' },
   getName: function () { return 'GMedia' },
   getDescription: function () { return 'Adds support for HTML5 media files. Now includes looping audio/video. Based on mediaSupport.plugin.js' },
-  getVersion: function () { return '1.2.3' },
+  getVersion: function () { return '1.2.4' },
   getAuthor: function () { return 'gn0mesort' },
   convert: function () {
     let targets = $('.attachment-inner a, .markup>a') // Select targets
